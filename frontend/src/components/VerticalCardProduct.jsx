@@ -36,7 +36,7 @@ const VerticalCardProduct = ({ category, heading }) => {
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-wide uppercase text-gray-800">
           {heading || "Latest Collection"}
         </h2>
-        <p className="text-gray-500 mt-2">Professional tools for your baking and decoration needs</p>
+        <p className="text-gray-500 mt-2">Premium fabrics and materials for your design needs</p>
         <div className="w-16 sm:w-24 h-[2px] bg-gray-700 mx-auto mt-3"></div>
       </div>
 

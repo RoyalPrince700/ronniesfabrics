@@ -16,9 +16,9 @@ function Home() {
       <div className='my-8'>
         <CategoryList/>
       </div>
-      <VerticalCardProduct  category={"baking"} heading={"Baking Essentials"} />
-      <VerticalCardProduct  category={"decoration"} heading={"Decoration Supplies"} />
-      <VerticalCardProduct  category={"equipment"} heading={"Professional Equipment"} />
+      <VerticalCardProduct  category={"lace"} heading={"Exquisite Lace"} />
+      <VerticalCardProduct  category={"silk"} heading={"Luxurious Silk"} />
+      <VerticalCardProduct  category={"cotton"} heading={"Premium Cotton"} />
 
 
 

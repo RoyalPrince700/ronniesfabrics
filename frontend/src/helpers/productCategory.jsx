@@ -1,9 +1,9 @@
 const productCategory = [
-    { id: 1, label: "Baking", value: "baking" },
-    { id: 2, label: "Decoration", value: "decoration" },
-    { id: 3, label: "Equipment", value: "equipment" },
-    { id: 4, label: "Packaging", value: "packaging" },
-    { id: 5, label: "Ingredients", value: "ingredients" },
+    { id: 1, label: "Cotton", value: "cotton" },
+    { id: 2, label: "Silk", value: "silk" },
+    { id: 3, label: "Lace", value: "lace" },
+    { id: 4, label: "Velvet", value: "velvet" },
+    { id: 5, label: "Linen", value: "linen" },
     { id: 6, label: "Others", value: "others" },
 ];
 

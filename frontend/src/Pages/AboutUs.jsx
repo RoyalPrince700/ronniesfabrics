@@ -7,7 +7,7 @@ const AboutUs = () => {
         <h1 className="text-4xl font-serif text-slate-800">About Ronniesfabrics</h1>
         <div className="w-16 h-[2px] bg-orange-400 mx-auto mt-4"></div>
         <p className="mt-6 text-lg text-slate-600 max-w-2xl mx-auto">
-          Empowering bakers and creators with the finest tools and decorations to bring their artistic visions to life.
+          Empowering designers and creators with the finest fabrics and materials to bring their artistic visions to life.
         </p>
       </header>
 
@@ -17,20 +17,20 @@ const AboutUs = () => {
             <h2 className="text-2xl font-bold text-slate-800 mb-4">Our Mission</h2>
             <p className="text-slate-600 leading-relaxed">
               At Ronniesfabrics, our mission is to provide a fast, clean shopping experience from discovery to checkout. 
-              We are committed to delivering high-quality baking and decoration equipment with exceptional customer service, 
-              ensuring that every baker—from home enthusiasts to professional pastry chefs—has access to the best supplies in the industry.
+              We are committed to delivering high-quality fabrics and textile materials with exceptional customer service, 
+              ensuring that every creator—from fashion enthusiasts to professional tailors—has access to the best materials in the industry.
             </p>
           </section>
 
           <section className="bg-[#FFF9F5] p-8 rounded-3xl shadow-sm border border-orange-100">
             <h2 className="text-2xl font-bold text-slate-800 mb-4">Who We Are</h2>
             <p className="text-slate-600 leading-relaxed">
-              Ronniesfabrics is a specialized e-commerce platform dedicated to baking and decoration equipment. We curate an extensive 
-              collection of high-quality baking tools, exquisite decorating supplies, professional kitchen equipment, and premium accessories.
+              Ronniesfabrics is a specialized e-commerce platform dedicated to premium fabrics and textiles. We curate an extensive 
+              collection of high-quality cottons, exquisite silks, durable linens, and premium fashion accessories.
             </p>
             <p className="mt-4 text-slate-600 leading-relaxed">
-              Our platform is designed for the creative minds who find joy in baking. We believe that the right tools are 
-              essential for perfection, which is why we only source products that meet our rigorous standards of quality and durability.
+              Our platform is designed for the creative minds who find joy in design. We believe that the right materials are 
+              essential for perfection, which is why we only source products that meet our rigorous standards of quality and style.
             </p>
           </section>
         </div>
@@ -41,11 +41,11 @@ const AboutUs = () => {
             <ul className="space-y-3 text-slate-600">
               <li className="flex items-start gap-2">
                 <span className="text-orange-500 font-bold">•</span>
-                <span>Premium baking pans and professional-grade equipment</span>
+                <span>Premium cotton, silk, and professional-grade textiles</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-orange-500 font-bold">•</span>
-                <span>Exquisite decorating tools, piping tips, and fondant supplies</span>
+                <span>Exquisite patterns, lace, and high-quality tailoring supplies</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-orange-500 font-bold">•</span>
@@ -57,7 +57,7 @@ const AboutUs = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-orange-500 font-bold">•</span>
-                <span>Fast delivery across the region to keep your kitchen running</span>
+                <span>Fast delivery across the region to keep your projects moving</span>
               </li>
             </ul>
           </section>

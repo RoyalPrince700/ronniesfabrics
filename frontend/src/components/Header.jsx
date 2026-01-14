@@ -99,7 +99,7 @@ const Header = () => {
               <GrSearch className='text-gray-400 mr-2' />
               <input 
                 type='text' 
-                placeholder='Search for baking tools, decorations...' 
+                placeholder='Search for fabrics, patterns, materials...' 
                 className='bg-transparent flex-1 outline-none text-sm'
                 value={search}
                 onChange={handleSearch}
@@ -116,17 +116,17 @@ const Header = () => {
 
         {/* Desktop Navigation */}
         <ul className='hidden sm:flex gap-5 text-sm text-gray-700'>
-            <NavLink to='/product-category?category=baking' className='flex flex-col items-center gap-1'>
-                <p>BAKING</p>
+            <NavLink to='/product-category?category=cotton' className='flex flex-col items-center gap-1'>
+                <p>COTTON</p>
               <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'/>
             </NavLink>
             
-            <NavLink to='/product-category?category=decoration' className='flex flex-col items-center gap-1'>
-                <p>DECORATION</p>
+            <NavLink to='/product-category?category=silk' className='flex flex-col items-center gap-1'>
+                <p>SILK</p>
                  <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'/>
             </NavLink>
-            <NavLink to='/product-category?category=equipment' className='flex flex-col items-center gap-1'>
-                <p>EQUIPMENT</p>
+            <NavLink to='/product-category?category=lace' className='flex flex-col items-center gap-1'>
+                <p>LACE</p>
                  <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'/>
             </NavLink>
         </ul>
@@ -190,9 +190,9 @@ const Header = () => {
 
                     {/* Navigation Links in Mobile Menu */}
                     <div className='flex flex-col border-b sm:hidden'>
-                        <NavLink onClick={()=>setVisible(false)} to='/product-category?category=baking' className='py-3 pl-6 hover:bg-gray-50 border-b font-medium text-gray-800'>BAKING</NavLink>
-                        <NavLink onClick={()=>setVisible(false)} to='/product-category?category=decoration' className='py-3 pl-6 hover:bg-gray-50 border-b font-medium text-gray-800'>DECORATION</NavLink>
-                        <NavLink onClick={()=>setVisible(false)} to='/product-category?category=equipment' className='py-3 pl-6 hover:bg-gray-50 border-b font-medium text-gray-800'>EQUIPMENT</NavLink>
+                        <NavLink onClick={()=>setVisible(false)} to='/product-category?category=cotton' className='py-3 pl-6 hover:bg-gray-50 border-b font-medium text-gray-800'>COTTON</NavLink>
+                        <NavLink onClick={()=>setVisible(false)} to='/product-category?category=silk' className='py-3 pl-6 hover:bg-gray-50 border-b font-medium text-gray-800'>SILK</NavLink>
+                        <NavLink onClick={()=>setVisible(false)} to='/product-category?category=lace' className='py-3 pl-6 hover:bg-gray-50 border-b font-medium text-gray-800'>LACE</NavLink>
                         <NavLink onClick={()=>setVisible(false)} to='/cart' className='py-3 pl-6 hover:bg-gray-50 flex items-center gap-2 font-medium text-gray-800'>
                             CART
                             <span className='bg-black text-white text-[10px] px-[6px] py-[2px] rounded-[4px] min-w-[18px] text-center leading-none'>

@@ -28,6 +28,12 @@ import LAAllOrders from "../Pages/LAAllOrders";
 import Support from "../Pages/Support";
 import AboutUs from "../Pages/AboutUs";
 import ContactUs from "../Pages/ContactUs";
+import Shipping from "../Pages/Shipping";
+import Returns from "../Pages/Returns";
+import FAQ from "../Pages/FAQ";
+import Privacy from "../Pages/Privacy";
+import Terms from "../Pages/Terms";
+import PurchaseProtection from "../Pages/PurchaseProtection";
 import TokenVerification from "../Pages/TokenVerification";
 import ResetPassword from "../Pages/ResetPassword";
 import AdminOverview from "../Pages/AdminOverview";
@@ -67,7 +73,7 @@ const router = createBrowserRouter([
             }, {
                 path: "auth/callback",
                 element: <AuthCallback />,
-            }, {
+            },             {
                 path: "support",
                 element: <Support />,
             },{
@@ -76,6 +82,24 @@ const router = createBrowserRouter([
             },{
                 path: "about-us",
                 element: <AboutUs />,
+            },{
+                path: "shipping",
+                element: <Shipping />,
+            },{
+                path: "returns",
+                element: <Returns />,
+            },{
+                path: "faq",
+                element: <FAQ />,
+            },{
+                path: "privacy",
+                element: <Privacy />,
+            },{
+                path: "terms",
+                element: <Terms />,
+            },{
+                path: "purchase-protection",
+                element: <PurchaseProtection />,
             },
             {
                 path: "product-category",

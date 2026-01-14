@@ -1,11 +1,11 @@
-# Ronniesfabrics – Baking and Decoration Equipment
+# Ronniesfabrics – Premium Fabric E-commerce Platform
 
-Ronniesfabrics is an A full e-commerce website where customers can browse fabrics, make payments, and track orders.
+Ronniesfabrics is a full e-commerce website where customers can browse fabrics, make payments, and track orders.
 
 ## Features
-- Browse baking and decoration categories and sub‑categories
-- Product search and filtering
-- Detailed product pages with images and variants
+- Browse fabric categories and sub‑categories
+- Product search and filtering by fabric type, color, and material
+- Detailed product pages with fabric specifications and images
 - Shopping cart and secure checkout
 - Order history and status tracking
 - Notifications and user account management
