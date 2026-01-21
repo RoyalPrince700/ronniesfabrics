@@ -51,7 +51,7 @@ const ContactUs = () => {
 
         <div className="mt-10 text-center">
           <p className="text-gray-700">Need urgent assistance? Call us at:</p>
-          <p className="text-yellow-600 font-semibold text-lg">09075799282</p>
+          <p className="text-yellow-600 font-semibold text-lg">07019277357</p>
           <p className="text-gray-700">Or email us at:</p>
           <p className="text-yellow-600 font-semibold text-lg">contact@ronniesfabrics.com</p>
         </div>

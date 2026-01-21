@@ -68,7 +68,7 @@ const AboutUs = () => {
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <span className="text-orange-400 font-semibold">Phone:</span>
-                <span>09075799282</span>
+                <span>07019277357</span>
               </div>
               <div className="flex items-center gap-3">
                 <span className="text-orange-400 font-semibold">Email:</span>

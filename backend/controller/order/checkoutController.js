@@ -32,7 +32,8 @@ const createCheckout = async (req, res) => {
       address,
       cartItems: cartItems.map(item => ({
         productId: item.productId._id || item.productId,
-        quantity: item.quantity
+        quantity: item.quantity,
+        price: item.productId.sellingPrice || item.productId.price || 0
       })),
       totalPrice,
       paymentMethod,

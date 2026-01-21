@@ -53,7 +53,7 @@ const Success = () => {
   }, [location]);
 
   return (
-    <div className=' w-full m-2 max-w-md mx-auto flex justify-center flex-col items-center'>
+    <div className=' w-full m-2 pt-8 max-w-md mx-auto flex justify-center flex-col items-center'>
       <img src={SUCCESSIMAGE}
 
         width={250} height={150}

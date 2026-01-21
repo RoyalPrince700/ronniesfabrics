@@ -64,7 +64,7 @@ const OrderPage = () => {
   }, [socket])
 
   return (
-    <div className="container mx-auto mt-12 px-4">
+    <div className="container pt-8 mx-auto mt-12 px-4">
       <h1 className="text-2xl font-bold mb-5">My Orders</h1>
       {!data.length ? (
         <p className="text-center text-lg text-gray-500">No orders available.</p>
@@ -90,18 +90,19 @@ const OrderPage = () => {
               <div className="grid gap-4 mb-6">
                 {item.cartItems.map((product) => (
                   <div key={product._id} className="flex flex-col sm:flex-row items-start sm:items-center gap-4 bg-gray-50 p-4 rounded-lg shadow-sm">
-                    <img 
-                      src={product?.productId?.productImage?.[0] || 'https://via.placeholder.com/100'} 
-                      alt={product?.productId?.productName || 'Product'} 
-                      className="w-20 sm:w-20 sm:h-20 h-20 object-contain border rounded-lg" 
+                    <img
+                      src={product?.productId?.productImage?.[0] || 'https://via.placeholder.com/100'}
+                      alt={product?.productId?.productName || 'Product'}
+                      className="w-20 sm:w-20 sm:h-20 h-20 object-contain border rounded-lg"
+                      onError={(e) => { e.target.src = 'https://via.placeholder.com/100'; }}
                     />
                     <div className="w-full">
                       <p className="text-sm lg:text-base font-medium text-gray-800 line-clamp-2">
-                        {product?.productId?.productName || "Product details loading..."}
+                        {product?.productId?.productName || "Product no longer available"}
                       </p>
                       <p className="text-sm text-gray-500 mt-1">Quantity: {product?.quantity}</p>
                       <p className="text-sm text-gray-500 mt-1">
-                        Price: {product?.productId?.sellingPrice ? displayNARCurrency(product.productId.sellingPrice) : "N/A"}
+                        Price: {product?.productId?.sellingPrice ? displayNARCurrency(product.productId.sellingPrice) : (product?.price ? displayNARCurrency(product.price) : "N/A")}
                       </p>
                     </div>
                   </div>

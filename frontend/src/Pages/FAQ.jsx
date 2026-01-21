@@ -21,7 +21,7 @@ const FAQ = () => {
         },
         {
           question: "Can I modify my order after placing it?",
-          answer: "Orders can be modified within 1 hour of placement. Please contact us immediately at 09075799282 to make changes."
+          answer: "Orders can be modified within 1 hour of placement. Please contact us immediately at 07019277357 to make changes."
         }
       ]
     },
@@ -149,7 +149,7 @@ const FAQ = () => {
               <span className="font-bold text-xl">📞</span>
             </div>
             <h3 className="font-semibold mb-2">Call Us</h3>
-            <p className="opacity-80">09075799282</p>
+            <p className="opacity-80">07019277357</p>
             <p className="text-sm opacity-60">Mon-Fri 9AM-6PM</p>
           </div>
           <div>

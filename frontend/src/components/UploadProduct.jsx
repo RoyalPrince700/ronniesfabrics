@@ -29,10 +29,7 @@ const UploadProduct = ({
     price: "",
     item: "",
     sellingPrice: "",
-    productStatus: "",
-    sellerName: "",
-    sellerBrandName: "",
-    sellerPhoneNumber : ""
+    productStatus: ""
   })
 
   // State to manage whether fullscreen image display is open
@@ -330,51 +327,6 @@ const UploadProduct = ({
                     })
                   }
                 </select>
-              </div>
-
-               {/* Input field for seller name */}
-              <div className='flex flex-col gap-1 mt-1'>
-                <label htmlFor='sellerName' className='text-sm font-semibold text-gray-700'>Seller Name</label>
-                <input 
-                  type='text' 
-                  id='sellerName' 
-                  placeholder='Enter Seller Name' 
-                  value={data.sellerName}
-                  name='sellerName'
-                  onChange={handleOnChange}
-                  className='p-3 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:bg-white transition-all'
-                  required
-                />
-              </div>
-
-              {/* Input field for seller brand name */}
-              <div className='flex flex-col gap-1 mt-1'>
-                <label htmlFor='sellerBrandName' className='text-sm font-semibold text-gray-700'>Seller Brand Name</label>
-                <input 
-                  type='text' 
-                  id='sellerBrandName' 
-                  placeholder='Enter Seller Brand Name' 
-                  value={data.sellerBrandName}
-                  name='sellerBrandName'
-                  onChange={handleOnChange}
-                  className='p-3 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:bg-white transition-all'
-                  required
-                />
-              </div>
-
-              {/* Input field for seller Phone Number */}
-              <div className='flex flex-col gap-1 mt-1'>
-                <label htmlFor='sellerPhoneNumber' className='text-sm font-semibold text-gray-700'>Seller Phone Number</label>
-                <input 
-                  type='text' 
-                  id='sellerPhoneNumber' 
-                  placeholder='Enter Seller Phone Number' 
-                  value={data.sellerPhoneNumber}
-                  name='sellerPhoneNumber'
-                  onChange={handleOnChange}
-                  className='p-3 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:bg-white transition-all'
-                  required
-                />
               </div>
 
               {/* Submit button */}

@@ -22,7 +22,7 @@ const Support = () => {
     },
     {
       question: 'What should I do if I have an issue with my order?',
-      answer: 'Contact us at 09075799282 or email us at contact@ronniesfabrics.com, and we’ll assist you promptly.',
+      answer: 'Contact us at 07019277357 or email us at contact@ronniesfabrics.com, and we’ll assist you promptly.',
     },
   ];
 
@@ -53,7 +53,7 @@ const Support = () => {
 
       <footer className="bg-yellow-100 p-4 rounded-md mt-8">
         <h2 className="text-xl font-semibold mb-2">Contact Us</h2>
-        <p className="mb-1">Phone: <a href="tel:09075799282" className="text-yellow-600">09075799282</a></p>
+        <p className="mb-1">Phone: <a href="tel:07019277357" className="text-yellow-600">07019277357</a></p>
         <p>Email: <a href="mailto:contact@ronniesfabrics.com" className="text-yellow-600">contact@ronniesfabrics.com</a></p>
       </footer>
     </div>

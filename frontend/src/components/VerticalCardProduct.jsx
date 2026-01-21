@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import fetchCategoryWiseProduct from '../helpers/fetchCategoryWiseProduct';
+import fetchAllProducts from '../helpers/fetchAllProducts';
 import displayNARCurrency from '../helpers/displayCurrency';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
@@ -12,9 +13,14 @@ const VerticalCardProduct = ({ category, heading }) => {
 
   const fetchData = async () => {
     setLoading(true);
-    const categoryProduct = await fetchCategoryWiseProduct(category);
+    let productData;
+    if (category === "all") {
+      productData = await fetchAllProducts();
+    } else {
+      productData = await fetchCategoryWiseProduct(category);
+    }
     setLoading(false);
-    setData(categoryProduct?.data);
+    setData(productData?.data);
   };
 
   useEffect(() => {

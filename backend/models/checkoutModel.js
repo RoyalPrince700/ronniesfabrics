@@ -11,7 +11,8 @@ const checkoutSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'product'
             },
-            quantity: Number
+            quantity: Number,
+            price: Number // Store price at time of order
         }
     ],
     totalPrice: Number,

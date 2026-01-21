@@ -36,6 +36,8 @@ const Checkout = () => {
     note: '',
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleChange = (e) => {
     setShippingDetails({
       ...shippingDetails,
@@ -92,12 +94,13 @@ const Checkout = () => {
   const handleFlutterwavePayment = async () => {
     if (!validateShippingDetails()) return;
 
+    setIsLoading(true);
     try {
       const response = await fetch(SummaryApi.payment.url, {
         method: SummaryApi.payment.method,
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           cartItems,
           shippingDetails // Include shipping details
         }),
@@ -110,96 +113,98 @@ const Checkout = () => {
         window.location.href = data.data.link;
       } else {
         toast.error(data.message || 'Failed to initiate payment');
+        setIsLoading(false);
       }
     } catch (error) {
       console.error('Error initiating Flutterwave payment:', error);
       toast.error('Error processing payment. Please try again.');
+      setIsLoading(false);
     }
   };
 
-  const handleWhatsAppRedirect = async () => {
-    if (!validateShippingDetails()) return;
+  // const handleWhatsAppRedirect = async () => {
+  //   if (!validateShippingDetails()) return;
 
-    // Persist order so it appears on the user orders page
-    let createdOrderId = '';
-    try {
-      const payload = {
-        name: shippingDetails.name,
-        number: shippingDetails.number,
-        address: shippingDetails.address,
-        note: shippingDetails.note || '',
-        cartItems,
-        totalPrice: totalPrice,
-        paymentMethod: 'WhatsApp Order',
-      };
+  //   // Persist order so it appears on the user orders page
+  //   let createdOrderId = '';
+  //   try {
+  //     const payload = {
+  //       name: shippingDetails.name,
+  //       number: shippingDetails.number,
+  //       address: shippingDetails.address,
+  //       note: shippingDetails.note || '',
+  //       cartItems,
+  //       totalPrice: totalPrice,
+  //       paymentMethod: 'WhatsApp Order',
+  //     };
 
-      const response = await fetch(SummaryApi.checkout.url, {
-        method: SummaryApi.checkout.method,
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+  //     const response = await fetch(SummaryApi.checkout.url, {
+  //       method: SummaryApi.checkout.method,
+  //       credentials: 'include',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(payload),
+  //     });
 
-      const data = await response.json();
-      if (response.ok && data?.data?._id) {
-        createdOrderId = data.data._id;
-        await fetchUserAddToCart();
-      }
-    } catch (err) {
-      console.error('Failed to create WhatsApp order checkout', err);
-      // continue anyway; we still open WhatsApp
-    }
+  //     const data = await response.json();
+  //     if (response.ok && data?.data?._id) {
+  //       createdOrderId = data.data._id;
+  //       await fetchUserAddToCart();
+  //     }
+  //   } catch (err) {
+  //     console.error('Failed to create WhatsApp order checkout', err);
+  //     // continue anyway; we still open WhatsApp
+  //   }
 
-    const itemsDetailed = cartItems.map((item) => {
-      const productObj = item?.productId || {};
-      const id = productObj?._id || item?.productId;
-      const name = item?.name || productObj?.productName || productObj?.name || 'Item';
-      const qty = item?.quantity || 1;
-      const price = productObj?.sellingPrice || item?.price || '';
-      const origin = typeof window !== 'undefined' ? window.location.origin : '';
-      const link = id ? `${origin}/product/${id}` : '';
-      const priceText = price !== '' ? `${displayNARCurrency(price)}` : '';
-      return `- ${name} x${qty} ${priceText} ${link}`;
-    }).join('%0A');
+  //   const itemsDetailed = cartItems.map((item) => {
+  //     const productObj = item?.productId || {};
+  //     const id = productObj?._id || item?.productId;
+  //     const name = item?.name || productObj?.productName || productObj?.name || 'Item';
+  //     const qty = item?.quantity || 1;
+  //     const price = productObj?.sellingPrice || item?.price || '';
+  //     const origin = typeof window !== 'undefined' ? window.location.origin : '';
+  //     const link = id ? `${origin}/product/${id}` : '';
+  //     const priceText = price !== '' ? `${displayNARCurrency(price)}` : '';
+  //     return `- ${name} x${qty} ${priceText} ${link}`;
+  //   }).join('%0A');
 
-    const message = `Hello, I'd like to complete my order.%0A` +
-      (createdOrderId ? `Order ID: ${createdOrderId}%0A` : '') +
-      `Name: ${shippingDetails.name}%0A` +
-      `Phone: ${shippingDetails.number}%0A` +
-      `Address: ${shippingDetails.address}%0A` +
-      `Note: ${shippingDetails.note || 'N/A'}%0A` +
-      `Items:%0A${itemsDetailed}%0A` +
-      `Total: ${displayNARCurrency(totalPrice.toFixed(2))}`;
+  //   const message = `Hello, I'd like to complete my order.%0A` +
+  //     (createdOrderId ? `Order ID: ${createdOrderId}%0A` : '') +
+  //     `Name: ${shippingDetails.name}%0A` +
+  //     `Phone: ${shippingDetails.number}%0A` +
+  //     `Address: ${shippingDetails.address}%0A` +
+  //     `Note: ${shippingDetails.note || 'N/A'}%0A` +
+  //     `Items:%0A${itemsDetailed}%0A` +
+  //     `Total: ${displayNARCurrency(totalPrice.toFixed(2))}`;
 
-    // Fire-and-forget admin email notification; don't block WhatsApp redirect
-    try {
-      await fetch(SummaryApi.notifyAdminsOrder.url, {
-        method: SummaryApi.notifyAdminsOrder.method,
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: shippingDetails.name,
-          number: shippingDetails.number,
-          address: shippingDetails.address,
-          note: shippingDetails.note || '',
-          cartItems,
-          total: displayNARCurrency(totalPrice.toFixed(2)),
-          paymentMethod: 'WhatsApp Order',
-        }),
-      });
-    } catch (e) {
-      // Non-blocking: log and continue
-      console.error('Failed to notify admins via email', e);
-    }
+  //   // Fire-and-forget admin email notification; don't block WhatsApp redirect
+  //   try {
+  //     await fetch(SummaryApi.notifyAdminsOrder.url, {
+  //       method: SummaryApi.notifyAdminsOrder.method,
+  //       credentials: 'include',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({
+  //         name: shippingDetails.name,
+  //         number: shippingDetails.number,
+  //         address: shippingDetails.address,
+  //         note: shippingDetails.note || '',
+  //         cartItems,
+  //         total: displayNARCurrency(totalPrice.toFixed(2)),
+  //         paymentMethod: 'WhatsApp Order',
+  //       }),
+  //     });
+  //   } catch (e) {
+  //     // Non-blocking: log and continue
+  //     console.error('Failed to notify admins via email', e);
+  //   }
 
-    const businessNumber = '2349075799282';
-    const url = `https://wa.me/${businessNumber}?text=${message}`;
-    window.open(url, '_blank');
-    navigate('/order');
-  };
+  //   const businessNumber = '07019277357';
+  //   const url = `https://wa.me/${businessNumber}?text=${message}`;
+  //   window.open(url, '_blank');
+  //   navigate('/order');
+  // };
 
   return (
-    <div className="container px-4 mx-auto mt-4">
+    <div className="container px-4 pt-16 mx-auto mt-4">
       <h1 className="text-3xl font-semibold mb-8">Checkout</h1>
       <div className="mb-10">
         <h2 className="text-xl font-medium mb-4">Shipping Details</h2>
@@ -254,19 +259,22 @@ const Checkout = () => {
 
       <div className="flex flex-col sm:flex-row gap-4 my-3">
         <button
-          className="bg-blue-600 text-white font-medium px-5 py-3 rounded-lg
-           hover:bg-blue-700 transition-all duration-300 ease-in-out"
+          className={`bg-blue-600 text-white font-medium px-5 py-3 rounded-lg
+           hover:bg-blue-700 transition-all duration-300 ease-in-out ${
+             isLoading ? 'opacity-50 cursor-not-allowed' : ''
+           }`}
           onClick={handleFlutterwavePayment}
+          disabled={isLoading}
         >
-          Pay with Card (Flutterwave)
+          {isLoading ? 'Processing...' : `Checkout (${displayNARCurrency(totalPrice.toFixed(2))})`}
         </button>
-        <button
+        {/* <button
           className="bg-black text-white font-medium px-5 py-3 rounded-lg
            hover:bg-gray-800 transition-all duration-300 ease-in-out"
           onClick={handleWhatsAppRedirect}
         >
           Complete Order on WhatsApp
-        </button>
+        </button> */}
       </div>
     </div>
   );

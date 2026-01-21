@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams, Link } from 'react-router-dom'
 import productCategory from '../helpers/productCategory'
 import VerticalCard from '../components/VerticalCard'
 import SummaryApi from '../common'
@@ -12,6 +12,7 @@ const CategoryProduct = () => {
     const location = useLocation()
     const urlSearch = new URLSearchParams(location.search)
     const urlCategoryListinArray = urlSearch.getAll("category")
+    const showAll = urlSearch.get("all") === "true"
 
     const urlCategoryListObject = {}
     urlCategoryListinArray.forEach(el =>{
@@ -21,12 +22,30 @@ const CategoryProduct = () => {
 
     const [selectCategory, setSelectCategory] = useState(urlCategoryListObject)
     const [filterCategoryList, setFilterCategoryList] = useState([])
+    const [categories, setCategories] = useState([])
 
     
 
     const [sortBy, setSortBy] = useState("")
 
+    const fetchAllCategories = async () => {
+      setLoading(true)
+      const response = await fetch(SummaryApi.categoryProduct.url)
+      const dataResponse = await response.json()
+      setLoading(false)
+      setCategories(dataResponse?.data || [])
+    }
+
+    const fetchAllProducts = async () => {
+      setLoading(true)
+      const response = await fetch(SummaryApi.allProduct.url)
+      const dataResponse = await response.json()
+      setData(dataResponse?.data || [])
+      setLoading(false)
+    }
+
     const fetchData = async()=>{
+      setLoading(true)
       const response = await fetch(SummaryApi.filterProduct.url,{
         method : SummaryApi.filterProduct.method,
         headers : {
@@ -40,7 +59,16 @@ const CategoryProduct = () => {
 
           const dataResponse = await response.json()
           setData(dataResponse?.data || [])
+          setLoading(false)
     }
+
+    useEffect(() => {
+      fetchAllCategories()
+      if(showAll) {
+        fetchAllProducts()
+      }
+    }, [showAll])
+
     const handleSelectCategory = (e) => {
       const {name, value, checked} = e.target
       setSelectCategory((preve)=>{
@@ -52,8 +80,12 @@ const CategoryProduct = () => {
     }
 
     useEffect(()=>{
-      fetchData()
-    },[filterCategoryList])
+      if(filterCategoryList.length > 0) {
+        fetchData()
+      } else if (!showAll) {
+        setData([])
+      }
+    },[filterCategoryList, showAll])
 
     useEffect(()=>{
       const arrayOfCategory = Object.keys(selectCategory).map(categoryKeyName =>{
@@ -73,8 +105,13 @@ const CategoryProduct = () => {
         return `category=${el}&&`
       })
 
-      
-      navigate("/product-category?"+urlFormat.join(""))
+      if (arrayOfCategory.length > 0) {
+        navigate("/product-category?"+urlFormat.join(""))
+      } else if (showAll) {
+        navigate("/product-category?all=true")
+      } else {
+        navigate("/product-category")
+      }
     },[selectCategory])
 
     const handleOnChangeSortBy = (e) => {
@@ -83,29 +120,22 @@ const CategoryProduct = () => {
       setSortBy(value)
 
       if(value === 'asc'){
-        setData(preve => preve.sort((a,b)=> a.sellingPrice - b.sellingPrice))
+        setData(preve => [...preve].sort((a,b)=> a.sellingPrice - b.sellingPrice))
       }
 
       if(value === 'dsc'){
-        setData(preve => preve.sort((a,b)=> b.sellingPrice - a.sellingPrice))
+        setData(preve => [...preve].sort((a,b)=> b.sellingPrice - a.sellingPrice))
       }
     }
-
-    useEffect(()=>{
-
-    },[sortBy])
     
   return (
     <div className='container mt-[100px] mx-auto p-4'>
       
-    {/* desktop version */}
-    <div className='hidden lg:grid grid-cols-[200px,1fr]'>
-      {/* left side */}
-      <div className='bg-white p-2 min-h-[calc(100vh-120px)] 
-      overflow-y-scroll'>
-
+    <div className='flex flex-col lg:grid lg:grid-cols-[200px,1fr] gap-4'>
+      {/* left side - Filters (only show when products are being filtered or on desktop) */}
+      <div className={`bg-white p-2 lg:min-h-[calc(100vh-120px)] ${(filterCategoryList.length === 0 && !showAll) ? 'hidden lg:block' : 'block'}`}>
         {/* sort by  */}
-        <div className=''>
+        <div className='mb-4'>
           <h3 className='text-base border-b pb-1 border-slate-300 uppercase font-medium text-slate-500'>Sort by</h3>
           <form className='text-sm flex flex-col gap-2 py-2'>
             <div className='flex items-center gap-3'>
@@ -125,18 +155,16 @@ const CategoryProduct = () => {
               <label>Price - High to Low</label>
             </div>
           </form>
-        
         </div>
 
-                {/* filter by  */}
-                <div className=''>
-          <h3 className='text-base border-b pb-1 border-slate-300 
-          uppercase font-medium text-slate-500'>Category</h3>
+        {/* filter by  */}
+        <div className=''>
+          <h3 className='text-base border-b pb-1 border-slate-300 uppercase font-medium text-slate-500'>Category</h3>
           <form className='text-sm flex flex-col gap-2 py-2'>
-         {
-          productCategory.map((categoryName,index)=>{
+            {
+              productCategory.map((categoryName,index)=>{
                 return(
-                  <div className='flex items-center gap-3'>
+                  <div className='flex items-center gap-3' key={index}>
                     <input type='checkbox' name={"category"} 
                         checked={selectCategory[categoryName?.value]}
                         id={categoryName?.value}
@@ -147,28 +175,89 @@ const CategoryProduct = () => {
                         {categoryName?.label}</label>
                   </div>
                 )
-          })
-         }
+              })
+            }
           </form>
-        
         </div>
       </div>
 
-         {/* right side */}
-         <div className='px-4 '>
-          <p className='font-medium text-slate-800 text-lg my-2'>Search Results : {data.length}</p>
-         <div className='min-h-[calc(100vh-120px)] 
-           overflow-y-scroll max-h-[calc(100vh-120px)]'>
-         {
-          data.length !== 0 &&  (
-            <VerticalCard data={data} loading={loading}/>
-          )
-         }
-         </div>
-          
-        </div>
+      {/* right side - Content */}
+      <div className='px-4 w-full'>
+          {
+            (filterCategoryList.length === 0 && !showAll) ? (
+              <div className='w-full'>
+                <h2 className='text-2xl md:text-3xl font-semibold mb-8 text-slate-800 text-center lg:text-left'>Shop by Category</h2>
+                <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6'>
+                  {
+                    loading ? (
+                      new Array(8).fill(null).map((_, index) => (
+                        <div key={index} className='bg-white rounded-xl shadow-sm overflow-hidden animate-pulse border border-slate-100'>
+                          <div className='aspect-square bg-slate-200'></div>
+                          <div className='p-4'>
+                            <div className='h-6 bg-slate-200 rounded w-2/3 mx-auto'></div>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      categories.map((category, index) => (
+                        <Link 
+                          to={`/product-category?category=${category.category}`}
+                          key={index}
+                          className='group bg-white rounded-xl shadow-sm hover:shadow-md transition-all border border-slate-100 overflow-hidden text-center flex flex-col'
+                          onClick={() => setSelectCategory({ [category.category]: true })}
+                        >
+                          <div className='aspect-square overflow-hidden bg-slate-50 p-4 flex items-center justify-center'>
+                            <img 
+                              src={category?.productImage?.[0]} 
+                              alt={category.category}
+                              className='max-w-full max-h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-300'
+                            />
+                          </div>
+                          <div className='p-3 md:p-4 border-t border-slate-50 mt-auto'>
+                            <h3 className='text-base md:text-lg font-medium text-slate-700 capitalize group-hover:text-orange-600 transition-colors truncate'>
+                              {category.category}
+                            </h3>
+                          </div>
+                        </Link>
+                      ))
+                    )
+                  }
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className='flex items-center justify-between mb-4'>
+                  <p className='font-medium text-slate-800 text-lg'>
+                    {showAll && filterCategoryList.length === 0 ? "All Products" : "Search Results"} : {data.length}
+                  </p>
+                  <button 
+                    onClick={() => {
+                      setSelectCategory({});
+                      navigate("/product-category");
+                    }} 
+                    className='text-orange-600 hover:text-orange-700 font-medium text-sm'
+                  >
+                    Clear All
+                  </button>
+                </div>
+                <div className='min-h-[calc(100vh-120px)] overflow-y-auto'>
+                {
+                  data.length !== 0 ? (
+                    <VerticalCard data={data} loading={loading}/>
+                  ) : (
+                    !loading && (
+                      <div className='flex flex-col items-center justify-center py-20'>
+                        <p className='text-slate-500 text-lg'>No products found.</p>
+                      </div>
+                    )
+                  )
+                }
+                </div>
+              </>
+            )
+          }
+      </div>
     </div>
-
     </div>
   )
 }

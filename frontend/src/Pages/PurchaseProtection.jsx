@@ -140,7 +140,7 @@ const PurchaseProtection = () => {
             <ol className="space-y-2 text-slate-600 text-sm">
               <li className="flex items-start gap-2">
                 <span className="text-orange-500 font-bold">1.</span>
-                <span>Contact our support team at 09075799282 or support@ronniesfabrics.com</span>
+                <span>Contact our support team at 07019277357 or support@ronniesfabrics.com</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-orange-500 font-bold">2.</span>
@@ -191,7 +191,7 @@ const PurchaseProtection = () => {
               <span className="font-bold text-xl">📞</span>
             </div>
             <h3 className="font-semibold mb-2">Call Us</h3>
-            <p className="opacity-80">09075799282</p>
+            <p className="opacity-80">07019277357</p>
             <p className="text-sm opacity-60">Mon-Fri 9AM-6PM</p>
           </div>
           <div>

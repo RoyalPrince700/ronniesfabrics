@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import materialImg from '../assets/material.jpg'
 
 const Hero = () => {
   return (
@@ -22,7 +23,7 @@ const Hero = () => {
                     <Link to="/product-category" className='bg-slate-900 text-white px-8 py-3.5 rounded-full font-medium hover:bg-slate-800 transition-all shadow-md hover:shadow-lg active:scale-95'>
                         Shop Fabrics
                     </Link>
-                    <Link to="/product-category?category=collections" className='bg-white border border-slate-200 text-slate-700 px-8 py-3.5 rounded-full font-medium hover:bg-slate-50 transition-all shadow-sm hover:shadow-md active:scale-95'>
+                    <Link to="/product-category?all=true" className='bg-white border border-slate-200 text-slate-700 px-8 py-3.5 rounded-full font-medium hover:bg-slate-50 transition-all shadow-sm hover:shadow-md active:scale-95'>
                         View Collections
                     </Link>
                 </div>
@@ -33,8 +34,8 @@ const Hero = () => {
         <div className='w-full md:w-1/2 h-[350px] md:h-[650px] relative'>
             <img 
                 className='w-full h-full object-cover' 
-                src="https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&q=80&w=1920" 
-                alt='Premium Fabrics'
+                src={materialImg} 
+                alt='Premium Wool Fabric Rolls'
             />
             {/* Subtle overlay for better text contrast on mobile if needed */}
             <div className='absolute inset-0 bg-gradient-to-r from-[#FFF9F5]/20 to-transparent md:hidden'></div>
