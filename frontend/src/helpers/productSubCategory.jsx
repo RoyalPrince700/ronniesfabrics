@@ -14,7 +14,13 @@ const productSubCategory = [
     { id: 13, label: "Lining Fabric", value: "lining_fabric" },
     { id: 14, label: "Ribbons & Trimmings", value: "ribbons_trimmings" },
     { id: 15, label: "Measuring Tapes", value: "measuring_tapes" },
-    { id: 16, label: "Other Accessories", value: "other_accessories" },
+    { id: 16, label: "Ankara", value: "ankara" },
+    { id: 17, label: "Lace", value: "lace" },
+    { id: 18, label: "German Wool", value: "german_wool" },
+    { id: 19, label: "Damask", value: "damask" },
+    { id: 20, label: "Siron Spon", value: "siron_spon" },
+    { id: 21, label: "Vanety Swiss Voile", value: "vanety_swiss_voile" },
+    { id: 22, label: "Other Accessories", value: "other_accessories" },
 ];
 
 export default productSubCategory;

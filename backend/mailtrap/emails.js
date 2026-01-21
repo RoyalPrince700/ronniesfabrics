@@ -1,6 +1,42 @@
 const { transporter, sender } = require('./mailtrap.config');
 const { VERIFICATION_EMAIL_TEMPLATE, PASSWORD_RESET_REQUEST_TEMPLATE, PASSWORD_RESET_SUCCESS_TEMPLATE, ORDER_NOTIFICATION_TEMPLATE, ORDER_CONFIRMATION_EMAIL_TEMPLATE, PAYMENT_SUCCESS_EMAIL_TEMPLATE, ORDER_STATUS_UPDATE_EMAIL_TEMPLATE } = require('./emailTemplates');
 
+const logMailSend = (tag, mailOptions) => {
+    try {
+        console.log(`[MAIL] -> ${tag}`, {
+            from: mailOptions?.from,
+            to: mailOptions?.to,
+            subject: mailOptions?.subject,
+        });
+    } catch (e) {
+        // ignore
+    }
+};
+
+const logMailResult = (tag, response) => {
+    try {
+        console.log(`[MAIL] <- ${tag}`, {
+            messageId: response?.messageId,
+            accepted: response?.accepted,
+            rejected: response?.rejected,
+            response: response?.response,
+        });
+    } catch (e) {
+        // ignore
+    }
+};
+
+const logMailError = (tag, error) => {
+    console.error(`[MAIL] !! ${tag} failed`, {
+        message: error?.message,
+        code: error?.code,
+        command: error?.command,
+        response: error?.response,
+        responseCode: error?.responseCode,
+        stack: error?.stack,
+    });
+};
+
 const sendVerificationEmail = async (email, token) => {
     try {
         const mailOptions = {
@@ -10,9 +46,12 @@ const sendVerificationEmail = async (email, token) => {
             html: VERIFICATION_EMAIL_TEMPLATE.replace("{verificationCode}", token),
         };
 
+        logMailSend('verification email', mailOptions);
         const response = await transporter.sendMail(mailOptions);
+        logMailResult('verification email', response);
+        return response;
     } catch (error) {
-        console.error("Error sending verification email:", error);
+        logMailError('verification email', error);
         throw new Error(`Error sending verification email: ${error.message}`);
     }
 };
@@ -81,9 +120,12 @@ const sendWelcomeEmail = async (email, name = 'there') => {
             html,
         };
 
+        logMailSend('welcome email', mailOptions);
         const response = await transporter.sendMail(mailOptions);
+        logMailResult('welcome email', response);
         return response;
     } catch (error) {
+        logMailError('welcome email', error);
         throw new Error(`Error sending welcome email: ${error.message}`);
     }
 }
@@ -97,8 +139,12 @@ const sendPasswordResetEmail = async (email, resetURL) => {
             html: PASSWORD_RESET_REQUEST_TEMPLATE.replace("{resetURL}", resetURL),
         };
 
+        logMailSend('password reset email', mailOptions);
         const response = await transporter.sendMail(mailOptions);
+        logMailResult('password reset email', response);
+        return response;
     } catch (error) {
+        logMailError('password reset email', error);
         throw new Error(`Error sending password reset email: ${error.message}`);
     }
 }
@@ -112,8 +158,12 @@ const sendResetSuccessfulEmail = async (email) => {
             html: PASSWORD_RESET_SUCCESS_TEMPLATE,
         };
 
+        logMailSend('password reset success email', mailOptions);
         const response = await transporter.sendMail(mailOptions);
+        logMailResult('password reset success email', response);
+        return response;
     } catch (error) {
+        logMailError('password reset success email', error);
         throw new Error(`Error sending password reset successful email: ${error}`);
     }
 }
@@ -148,14 +198,19 @@ const sendOrderNotificationEmail = async (recipients, payload) => {
     try {
         const mailOptions = {
             from: `"${sender.name}" <${sender.email}>`,
-            to: recipients.join(', '),
+            to: Array.isArray(recipients) ? recipients.join(', ') : recipients,
             subject: `New Order from ${payload.name}`,
             html,
         };
 
+        logMailSend('admin order notification', mailOptions);
         const response = await transporter.sendMail(mailOptions);
+        logMailResult('admin order notification', response);
+        return response;
     } catch (error) {
-        // Do not throw; we don't want to block user flow
+        logMailError('admin order notification', error);
+        // Throw so callers can log/report; callers already catch so it won't block user flow
+        throw error;
     }
 };
 
@@ -190,9 +245,14 @@ const sendUserOrderConfirmationEmail = async (userEmail, payload) => {
             html,
         };
 
+        logMailSend('user order confirmation', mailOptions);
         const response = await transporter.sendMail(mailOptions);
+        logMailResult('user order confirmation', response);
+        return response;
     } catch (error) {
-        // Do not throw; we don't want to block user flow
+        logMailError('user order confirmation', error);
+        // Throw so callers can log/report; callers already catch so it won't block user flow
+        throw error;
     }
 };
 
@@ -219,9 +279,13 @@ const sendPaymentSuccessEmail = async (userEmail, paymentData) => {
             html,
         };
 
+        logMailSend('user payment success', mailOptions);
         const response = await transporter.sendMail(mailOptions);
+        logMailResult('user payment success', response);
+        return response;
     } catch (error) {
-        // Do not throw; we don't want to block the payment flow
+        logMailError('user payment success', error);
+        throw error;
     }
 };
 
@@ -261,9 +325,13 @@ const sendPaymentSuccessNotificationToAdmin = async (paymentData) => {
             html,
         };
 
+        logMailSend('admin payment success', mailOptions);
         const response = await transporter.sendMail(mailOptions);
+        logMailResult('admin payment success', response);
+        return response;
     } catch (error) {
-        // Do not throw; we don't want to block the payment flow
+        logMailError('admin payment success', error);
+        throw error;
     }
 };
 
@@ -307,9 +375,13 @@ const sendOrderStatusUpdateEmail = async (userEmail, orderData) => {
             html,
         };
 
+        logMailSend('order status update', mailOptions);
         const response = await transporter.sendMail(mailOptions);
+        logMailResult('order status update', response);
+        return response;
     } catch (error) {
-        // Do not throw; we don't want to block the status update
+        logMailError('order status update', error);
+        throw error;
     }
 };
 

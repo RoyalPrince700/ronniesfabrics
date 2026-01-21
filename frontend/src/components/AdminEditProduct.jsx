@@ -178,7 +178,7 @@ const AdminEditProduct = ({
                   {
                     productCategory.map((el, index) => {
                       return (
-                        <option value={el.value} key={el.value + index}>{el.value}</option>
+                        <option value={el.value} key={el.value + index}>{el.label}</option>
                       )
                     })
                   }
@@ -194,7 +194,7 @@ const AdminEditProduct = ({
                   {
                     productSubCategory.map((el, index) => {
                       return (
-                        <option value={el.value} key={el.value + index}>{el.value}</option>
+                        <option value={el.value} key={el.value + index}>{el.label}</option>
                       )
                     })
                   }
@@ -210,7 +210,7 @@ const AdminEditProduct = ({
                   {
                     productDeal.map((el, index) => {
                       return (
-                        <option value={el.value} key={el.value + index}>{el.value}</option>
+                        <option value={el.value} key={el.value + index}>{el.label}</option>
                       )
                     })
                   }
@@ -326,7 +326,7 @@ const AdminEditProduct = ({
                   {
                     productStatus.map((el, index) => {
                       return (
-                        <option value={el.value} key={el.value + index}>{el.value}</option>
+                        <option value={el.value} key={el.value + index}>{el.label}</option>
                       )
                     })
                   }

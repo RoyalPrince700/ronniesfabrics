@@ -32,18 +32,45 @@ const transporter = nodemailer.createTransport({
 // Use either MAILTRAP_FROM_EMAIL or MAILTRAP_FROM
 const fromEmail = process.env.MAILTRAP_FROM_EMAIL || process.env.MAILTRAP_FROM || "noreply@ronniesfabrics.com";
 
+// Log mail configuration summary (safe, no secrets)
+try {
+    console.log('[MAIL] Config loaded:', {
+        NODE_ENV: process.env.NODE_ENV,
+        isProd,
+        host,
+        port,
+        userSet: !!user,
+        passSet: !!pass,
+        fromEmail,
+        adminNotificationEmailSet: !!process.env.ADMIN_NOTIFICATION_EMAIL,
+        adminEmail1Set: !!process.env.ADMINEMAIL1,
+        adminEmail2Set: !!process.env.ADMINEMAIL2,
+    });
+} catch (e) {
+    // ignore logging failures
+}
 
 // Verify the connection on startup (non-blocking)
 if (user && pass) {
     transporter.verify((error, success) => {
         if (error) {
-            // Connection verification failed - silently handle
+            console.error('[MAIL] SMTP verify failed:', {
+                message: error?.message,
+                code: error?.code,
+                command: error?.command,
+                response: error?.response,
+            });
         } else {
-            // Server is ready to take messages - silently handle
+            console.log('[MAIL] SMTP verify OK:', { success: !!success, host, port });
         }
     });
 } else {
-    // SMTP credentials missing. Emails will fail to send.
+    console.error('[MAIL] SMTP credentials missing. Emails will fail to send.', {
+        MAILTRAP_PROD_USER_set: !!user,
+        MAILTRAP_PROD_PASS_set: !!pass,
+        MAILTRAP_PROD_HOST: host,
+        MAILTRAP_PROD_PORT: port,
+    });
 }
 
 const sender = {

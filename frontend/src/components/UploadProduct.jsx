@@ -177,7 +177,7 @@ const UploadProduct = ({
                   {
                     productCategory.map((el, index) => {
                       return (
-                        <option value={el.value} key={el.value + index}>{el.value}</option>
+                        <option value={el.value} key={el.value + index}>{el.label}</option>
                       )
                     })
                   }
@@ -193,7 +193,7 @@ const UploadProduct = ({
                   {
                     productSubCategory.map((el, index) => {
                       return (
-                        <option value={el.value} key={el.value + index}>{el.value}</option>
+                        <option value={el.value} key={el.value + index}>{el.label}</option>
                       )
                     })
                   }
@@ -209,7 +209,7 @@ const UploadProduct = ({
                   {
                     productDeal.map((el, index) => {
                       return (
-                        <option value={el.value} key={el.value + index}>{el.value}</option>
+                        <option value={el.value} key={el.value + index}>{el.label}</option>
                       )
                     })
                   }
@@ -325,7 +325,7 @@ const UploadProduct = ({
                   {
                     productStatus.map((el, index) => {
                       return (
-                        <option value={el.value} key={el.value + index}>{el.value}</option>
+                        <option value={el.value} key={el.value + index}>{el.label}</option>
                       )
                     })
                   }

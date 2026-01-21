@@ -144,7 +144,7 @@ const CategoryProduct = () => {
                         onChange={handleSelectCategory}/>
 
                     <label htmlFor={categoryName?.value}>
-                        {categoryName?.value}</label>
+                        {categoryName?.label}</label>
                   </div>
                 )
           })
