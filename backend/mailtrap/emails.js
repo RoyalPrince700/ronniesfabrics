@@ -43,7 +43,7 @@ const sendWelcomeEmail = async (email, name = 'there') => {
     <div class="header">
       <div class="welcome-icon">🎉</div>
       <h1>Welcome to Ronniesfabrics!</h1>
-      <p>Your journey to perfect baking and decorating starts here</p>
+      <p>Your journey to finding the perfect fabrics starts here</p>
     </div>
 
     <h2>${personalizedGreeting}</h2>
@@ -53,10 +53,10 @@ const sendWelcomeEmail = async (email, name = 'there') => {
     <p>Here's what you can do to get started:</p>
 
     <ul>
-      <li><strong>Browse our catalog</strong> - Discover premium baking tools and decorating supplies</li>
-      <li><strong>Shop our equipment</strong> - Find high-quality baking essentials and kitchen tools</li>
+      <li><strong>Browse our catalog</strong> - Discover premium fabrics for all your tailoring and fashion needs</li>
+      <li><strong>Shop by category</strong> - Find high-quality materials, colors, and fabric types</li>
       <li><strong>Track your orders</strong> - Real-time updates on your purchases and shipping status</li>
-      <li><strong>Earn rewards</strong> - Get points on every purchase for future discounts</li>
+      <li><strong>Manage your account</strong> - Update your profile and view your order history</li>
     </ul>
 
     <div style="text-align: center; margin: 30px 0;">
@@ -77,7 +77,7 @@ const sendWelcomeEmail = async (email, name = 'there') => {
         const mailOptions = {
             from: `"${sender.name}" <${sender.email}>`,
             to: email,
-            subject: "🎉 Welcome to Ronniesfabrics - Your Baking Journey Begins!",
+            subject: "🎉 Welcome to Ronniesfabrics - Your Fabric Journey Begins!",
             html,
         };
 
@@ -227,9 +227,16 @@ const sendPaymentSuccessEmail = async (userEmail, paymentData) => {
 
 // Admin payment success notification
 const sendPaymentSuccessNotificationToAdmin = async (paymentData) => {
-    const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL;
-    if (!adminEmail) {
-        return;
+    const adminRecipients = [];
+    if (process.env.ADMINEMAIL1) adminRecipients.push(process.env.ADMINEMAIL1);
+    if (process.env.ADMINEMAIL2) adminRecipients.push(process.env.ADMINEMAIL2);
+    if (process.env.ADMIN_NOTIFICATION_EMAIL && !adminRecipients.includes(process.env.ADMIN_NOTIFICATION_EMAIL)) {
+        adminRecipients.push(process.env.ADMIN_NOTIFICATION_EMAIL);
+    }
+
+    // Fallback to the user's requested admin email if none configured
+    if (adminRecipients.length === 0) {
+        adminRecipients.push('ronniesfabrics05@gmail.com');
     }
 
     const orderDetails = paymentData.orderId ? `
@@ -249,8 +256,8 @@ const sendPaymentSuccessNotificationToAdmin = async (paymentData) => {
     try {
         const mailOptions = {
             from: `"${sender.name}" <${sender.email}>`,
-            to: adminEmail,
-            subject: `New Payment Received - ₦${paymentData.amount}`,
+            to: adminRecipients.join(', '),
+            subject: `New Payment Received - ₦${paymentData.amount} | Ronniesfabrics`,
             html,
         };
 

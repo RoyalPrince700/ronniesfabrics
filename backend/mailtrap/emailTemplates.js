@@ -222,7 +222,7 @@ const ORDER_NOTIFICATION_TEMPLATE = `
 </head>
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #111827; max-width: 700px; margin: 0 auto; padding: 20px;">
   <h2 style="margin-top: 0;">New Order Placed</h2>
-  <p>A customer just initiated an order via WhatsApp. Here are the details:</p>
+  <p>A customer just initiated an order. Here are the details:</p>
 
   <h3>Customer</h3>
   <p>

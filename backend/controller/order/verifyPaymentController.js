@@ -3,7 +3,7 @@ const orderModel = require('../../models/orderProductModel');
 const checkoutModel = require('../../models/checkoutModel');
 const addToCartModel = require('../../models/cartProduct');
 const UserModel = require('../../models/userModel');
-const { sendPaymentSuccessEmail, sendPaymentSuccessNotificationToAdmin, sendUserOrderConfirmationEmail } = require('../../mailtrap/emails');
+const { sendPaymentSuccessEmail, sendPaymentSuccessNotificationToAdmin, sendUserOrderConfirmationEmail, sendOrderNotificationEmail } = require('../../mailtrap/emails');
 
 const verifyPaymentController = async (request, response) => {
     try {
@@ -66,7 +66,27 @@ const verifyPaymentController = async (request, response) => {
                 // Send notification to admin
                 console.log('[SUCCESS PAGE] 📧 Sending payment success notification to admin for existing order');
                 await sendPaymentSuccessNotificationToAdmin(paymentData);
-                console.log('[SUCCESS PAGE] ✅ Existing order - Admin payment notification sent successfully');
+
+                // Also send a full order notification (with items list) to admin
+                console.log('[SUCCESS PAGE] 📧 Sending full order notification to admin for existing order');
+                const adminRecipients = [];
+                if (process.env.ADMINEMAIL1) adminRecipients.push(process.env.ADMINEMAIL1);
+                if (process.env.ADMINEMAIL2) adminRecipients.push(process.env.ADMINEMAIL2);
+                if (process.env.ADMIN_NOTIFICATION_EMAIL && !adminRecipients.includes(process.env.ADMIN_NOTIFICATION_EMAIL)) {
+                    adminRecipients.push(process.env.ADMIN_NOTIFICATION_EMAIL);
+                }
+                if (adminRecipients.length === 0) adminRecipients.push('ronniesfabrics05@gmail.com');
+
+                await sendOrderNotificationEmail(adminRecipients, {
+                    name: existingCheckout.name,
+                    number: existingCheckout.number,
+                    address: existingCheckout.address,
+                    note: existingCheckout.note || 'N/A',
+                    paymentMethod: existingCheckout.paymentMethod || 'Flutterwave Card',
+                    total: `₦${existingCheckout.totalPrice}`,
+                    cartItems: existingCheckout.cartItems
+                });
+                console.log('[SUCCESS PAGE] ✅ Existing order - Admin order & payment notifications sent successfully');
 
                 console.log('[SUCCESS PAGE] 🎉 All emails sent successfully for existing order, transaction:', transaction_id);
 
@@ -187,7 +207,27 @@ const verifyPaymentController = async (request, response) => {
                 // Send notification to admin
                 console.log('[SUCCESS PAGE] 📧 Sending payment success notification to admin');
                 await sendPaymentSuccessNotificationToAdmin(paymentData);
-                console.log('[SUCCESS PAGE] ✅ Admin payment notification sent successfully');
+
+                // Also send a full order notification (with items list) to admin
+                console.log('[SUCCESS PAGE] 📧 Sending full order notification to admin');
+                const adminRecipients = [];
+                if (process.env.ADMINEMAIL1) adminRecipients.push(process.env.ADMINEMAIL1);
+                if (process.env.ADMINEMAIL2) adminRecipients.push(process.env.ADMINEMAIL2);
+                if (process.env.ADMIN_NOTIFICATION_EMAIL && !adminRecipients.includes(process.env.ADMIN_NOTIFICATION_EMAIL)) {
+                    adminRecipients.push(process.env.ADMIN_NOTIFICATION_EMAIL);
+                }
+                if (adminRecipients.length === 0) adminRecipients.push('ronniesfabrics05@gmail.com');
+
+                await sendOrderNotificationEmail(adminRecipients, {
+                    name: savedCheckout.name,
+                    number: savedCheckout.number,
+                    address: savedCheckout.address,
+                    note: savedCheckout.note || 'N/A',
+                    paymentMethod: 'Flutterwave Card',
+                    total: `₦${savedCheckout.totalPrice}`,
+                    cartItems: savedCheckout.cartItems
+                });
+                console.log('[SUCCESS PAGE] ✅ Admin order & payment notifications sent successfully');
 
                 console.log('[SUCCESS PAGE] 🎉 All emails sent successfully for transaction:', transaction_id);
 
