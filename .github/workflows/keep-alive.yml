@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ping Render Backend
-        run: curl -s https://jubiac.onrender.com > /dev/null
+        run: curl -s https://ronniesfabrics.onrender.com > /dev/null
