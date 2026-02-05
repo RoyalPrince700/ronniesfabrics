@@ -301,7 +301,7 @@ const ORDER_STATUS_UPDATE_EMAIL_TEMPLATE = `
     <p>You can track your order and view all updates in your account dashboard.</p>
 
     <div style="text-align: center; margin: 30px 0;">
-      <a href="{frontendUrl}/orders" class="action-button">View My Orders</a>
+      <a href="{frontendUrl}/order" class="action-button">View My Orders</a>
     </div>
 
     <p>If you have any questions about your order, please don't hesitate to contact our support team.</p>

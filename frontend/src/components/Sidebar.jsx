@@ -24,7 +24,7 @@ const SIDEBAR_ITEMS = [
 		color: "#6366f1",
 		href: "/admin-overview/overview",
 	},
-    { name: "Orders", icon: IoCartOutline, color: "#F59E0B", href: "/admin-overview/order-page" },
+    { name: "Orders", icon: IoCartOutline, color: "#F59E0B", href: "/admin-overview/admin-order-page" },
 	{ name: "Products", icon: AiFillProduct, color: "#8B5CF6", href: "/admin-overview/all-products" },
 	{ name: "Users", icon: CgProfile, color: "#EC4899", href: "/admin-overview/user-page" },
 	{ name: "Sales", icon: TbCurrencyNaira, color: "#10B981", href: "/admin-overview/sale-page" },

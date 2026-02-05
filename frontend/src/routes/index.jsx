@@ -40,7 +40,7 @@ import AdminOverview from "../Pages/AdminOverview";
 import OverviewPage from "../Pages/OverviewPage";
 import UsersPage from "../Pages/UsersPage";
 import SalesPage from "../Pages/SalesPage";
-import OrdersPage from "../Pages/OrdersPage";
+import AdminOrderPage from "../Pages/AdminOrderPage";
 import AssignedOrders from "../Pages/AssignedOrders";
 import NotificationsPage from "../Pages/NotificationPage";
 
@@ -171,8 +171,8 @@ const router = createBrowserRouter([
                         path: "user-page",
                                 element: <UsersPage />,
                     },                    {
-                        path: "order-page",
-                                element: <OrdersPage />,
+                        path: "admin-order-page",
+                        element: <AdminOrderPage />,
                     },                    {
                         path: "sale-page",
                         element: <SalesPage />,
@@ -189,11 +189,11 @@ const router = createBrowserRouter([
                                 path: "user-page",
                                 element: <UsersPage />
                             },{
+                                path: "admin-order-page",
+                                element: <AdminOrderPage />
+                            },{
                                 path: "sale-page",
                                 element: <SalesPage />
-                            },{
-                                path: "order-page",
-                                element: <OrdersPage />
                             },
                         ]
                     },

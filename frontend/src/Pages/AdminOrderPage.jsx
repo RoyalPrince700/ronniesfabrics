@@ -8,7 +8,7 @@ import OrderDistribution from "../analysis/overview/OrderDistribution";
 import OrdersTable from "../analysis/overview/OrdersTable";
 import SummaryApi from "../common";
 
-const OrdersPage = () => {
+const AdminOrderPage = () => {
     const [orderStats, setOrderStats] = useState({
         totalOrders: "0",
         pendingOrders: "0",
@@ -76,7 +76,7 @@ const OrdersPage = () => {
     return (
         <div className="flex-1 relative z-10 overflow-y-auto h-screen">
             <Header title="Orders" />
-    
+
             <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
                 {/* ORDER STATS */}
                 <motion.div
@@ -110,13 +110,13 @@ const OrdersPage = () => {
                         color="#EF4444"
                     />
                 </motion.div>
-    
+
                 {/* CHARTS */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                     <DailyOrders />
                     <OrderDistribution />
                 </div>
-    
+
                 {/* ORDERS TABLE */}
                 <OrdersTable />
             </main>
@@ -124,4 +124,4 @@ const OrdersPage = () => {
     );
 };
 
-export default OrdersPage;
+export default AdminOrderPage;
