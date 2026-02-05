@@ -1,6 +1,18 @@
 const { transporter, sender } = require('./mailtrap.config');
 const { VERIFICATION_EMAIL_TEMPLATE, PASSWORD_RESET_REQUEST_TEMPLATE, PASSWORD_RESET_SUCCESS_TEMPLATE, ORDER_NOTIFICATION_TEMPLATE, ORDER_CONFIRMATION_EMAIL_TEMPLATE, PAYMENT_SUCCESS_EMAIL_TEMPLATE, ORDER_STATUS_UPDATE_EMAIL_TEMPLATE } = require('./emailTemplates');
 
+// Utility function to get the correct frontend URL
+const getFrontendUrl = () => {
+    const isProdLike =
+        process.env.NODE_ENV === 'production' ||
+        !!process.env.RENDER_EXTERNAL_URL ||
+        !!process.env.RENDER ||
+        !!process.env.VERCEL;
+
+    return process.env.FRONTEND_URL ||
+        (isProdLike ? 'https://www.ronniesfabrics.com' : 'http://localhost:5173');
+};
+
 const logMailSend = (tag, mailOptions) => {
     try {
         console.log(`[MAIL] -> ${tag}`, {
@@ -59,7 +71,7 @@ const sendVerificationEmail = async (email, token) => {
 const sendWelcomeEmail = async (email, name = 'there') => {
     try {
         const personalizedGreeting = name !== 'there' ? `Hi ${name}!` : 'Hello there!';
-        const frontendUrl = process.env.FRONTEND_URL || 'https://Ronniesfabrics.vercel.app'; // Default to Vercel URL
+        const frontendUrl = getFrontendUrl();
 
         const html = `
 <!DOCTYPE html>
@@ -179,7 +191,7 @@ const sendOrderNotificationEmail = async (recipients, payload) => {
             const name = it?.name || productObj?.productName || productObj?.name || 'Item';
             const qty = it?.quantity || 1;
             const price = productObj?.sellingPrice || it?.price || '';
-            const base = process.env.FRONTEND_URL?.replace(/\/$/, '') || '';
+            const base = getFrontendUrl().replace(/\/$/, '');
             const url = id ? `${base}/product/${id}` : '';
             const priceText = price !== '' ? price : '';
             return `<tr><td>${name}</td><td>${qty}</td><td>${priceText}</td><td>${url ? `<a href="${url}">View</a>` : ''}</td></tr>`;
@@ -365,7 +377,7 @@ const sendOrderStatusUpdateEmail = async (userEmail, orderData) => {
         .replace('{status}', orderData.status)
         .replace('{statusClass}', getStatusClass(orderData.status))
         .replace('{nextSteps}', getNextSteps(orderData.status))
-        .replace('{frontendUrl}', process.env.FRONTEND_URL || 'http://localhost:5173');
+        .replace('{frontendUrl}', getFrontendUrl());
 
     try {
         const mailOptions = {

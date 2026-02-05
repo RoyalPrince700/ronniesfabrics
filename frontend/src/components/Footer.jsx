@@ -114,7 +114,6 @@ const Footer = () => {
           <div className="mt-4 text-center text-sm space-x-4 text-gray-400">
             <a href="/privacy" className="hover:text-yellow-500">Privacy Policy</a>
             <a href="/terms" className="hover:text-yellow-500">Terms of Use</a>
-            <a href="/help" className="hover:text-yellow-500">Help Center</a>
           </div>
         </div>
       </div>
