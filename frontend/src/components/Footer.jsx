@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaFacebook, FaTwitter, FaInstagram, FaPinterest, FaChevronDown } from 'react-icons/fa';
+import logo from '../assets/ronniesfabricslogo.png';
 
 const Footer = () => {
   // State for toggling sections
@@ -93,7 +94,10 @@ const Footer = () => {
         {/* Footer Bottom */}
         <div className="border-t border-gray-700 mt-6 pt-4">
           <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-            <p className="text-sm text-gray-400">&copy; 2024 RONNIESFABRICS. All Rights Reserved.</p>
+            <div className="flex items-center space-x-3">
+              <img src={logo} alt="Ronnies Fabrics Logo" className="h-6 w-auto" />
+              <p className="text-sm text-gray-400">&copy; 2024 RONNIESFABRICS. All Rights Reserved.</p>
+            </div>
             <div className="flex space-x-4 text-lg text-gray-300">
               {/* <FaFacebook className="hover:text-yellow-500" /> */}
               <a href="https://x.com/Wifmartofficial?t=lrCWxgox2bR5yiHPktXWUw&s=09" target="_blank" rel="noopener noreferrer">

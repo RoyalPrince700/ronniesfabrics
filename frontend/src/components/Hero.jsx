@@ -5,16 +5,16 @@ import materialImg from '../assets/material.jpg'
 const Hero = () => {
   return (
     <div className='w-full px-4 pt-20 sm:px-10 lg:px-16'>
-      <div className='mx-auto max-w-7xl flex flex-col md:flex-row items-center bg-[#FFF9F5] rounded-3xl overflow-hidden shadow-sm border border-orange-50'>
+      <div className='mx-auto max-w-7xl flex flex-col md:flex-row items-center bg-[#FFFEF7] rounded-3xl overflow-hidden shadow-sm border border-[#ffc21f]/20'>
         {/* hero left content */}
         <div className='w-full md:w-1/2 flex flex-col justify-center py-12 md:py-20 px-8 lg:px-16'>
             <div className='max-w-md'>
                 <div className='flex items-center gap-3 mb-6'>
-                    <span className='w-12 h-[2px] bg-orange-300'></span>
-                    <p className='font-semibold text-orange-600 tracking-widest text-xs uppercase'>Premium Fabric Collection</p>
+                    <span className='w-12 h-[2px] bg-[#ffc21f]'></span>
+                    <p className='font-semibold text-[#ffc21f] tracking-widest text-xs uppercase'>Premium Fabric Collection</p>
                 </div>
                 <h1 className='text-4xl lg:text-6xl font-serif text-slate-800 leading-tight mb-6'>
-                    Elegance in Every <span className='text-orange-500'>Thread</span>
+                    Elegance in Every <span className='text-[#ffc21f]'>Thread</span>
                 </h1>
                 <p className='text-slate-600 text-base md:text-lg mb-10 leading-relaxed'>
                     Discover high-quality fabrics, exquisite patterns, and premium materials tailored for every design, from bespoke fashion to home decor.
@@ -38,7 +38,7 @@ const Hero = () => {
                 alt='Premium Wool Fabric Rolls'
             />
             {/* Subtle overlay for better text contrast on mobile if needed */}
-            <div className='absolute inset-0 bg-gradient-to-r from-[#FFF9F5]/20 to-transparent md:hidden'></div>
+            <div className='absolute inset-0 bg-gradient-to-r from-[#FFFEF7]/20 to-transparent md:hidden'></div>
         </div>
       </div>
     </div>

@@ -15,6 +15,7 @@ import { PiShoppingCartSimpleBold } from "react-icons/pi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdOutlineContactSupport } from "react-icons/md";
 import { IoMdArrowDropdown } from "react-icons/io";
+import logo from "../assets/ronniesfabricslogo.png";
 
 const Header = () => {
   const [menuDisplay, setMenuDisplay] = useState(false);
@@ -110,8 +111,8 @@ const Header = () => {
           </div>
         </div>
 
-        <Link to='/'>
-          <span className='text-xl sm:text-2xl font-bold text-gray-800 select-none'>Ronniesfabrics</span>
+        <Link to='/' className='flex items-center'>
+          <img src={logo} alt="Ronnies Fabrics Logo" className='h-8 sm:h-10 w-auto select-none' />
         </Link>
 
         {/* Desktop Navigation */}
